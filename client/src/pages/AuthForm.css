@@ -1,0 +1,112 @@
+
+.auth-wrapper {
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-form {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 800px;
+  width: 120%;
+  padding: 3rem 2.5rem;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.auth-form:hover {
+  box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.6);
+}
+
+.auth-form h2 {
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 1.2px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.auth-form form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-form input {
+  padding: 0.85rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 15px;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: inset 2px 2px 5px rgba(255,255,255,0.6),
+              inset -5px -5px 10px rgba(0,0,0,0.2);
+  color: #fff;
+  font-family: inherit;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  width: 100%; /* make inputs full width */
+  box-sizing: border-box; /* include padding in width */
+}
+
+.auth-form input::placeholder {
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+.auth-form input:focus {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.7);
+}
+
+.auth-form button {
+  padding: 0.9rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(101, 41, 255, 0.4);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  font-family: inherit;
+}
+
+.auth-form button:hover {
+  box-shadow: 0 6px 20px rgba(101, 41, 255, 0.7);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .auth-form {
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+  }
+
+  .auth-form h2 {
+    font-size: 1.6rem;
+  }
+
+  .auth-form input {
+    font-size: 0.95rem;
+    border-radius: 12px;
+  }
+
+  .auth-form button {
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+}

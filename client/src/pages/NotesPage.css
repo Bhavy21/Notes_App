@@ -1,0 +1,397 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.app-container {  
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4a90e2;
+}
+
+/* Notes list container */
+.notes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Individual note card */
+.note-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  cursor: default;
+}
+
+.note-card:hover {
+  box-shadow: 0 6px 14px rgb(0 0 0 / 0.15);
+}
+
+/* Note title */
+.note-title {
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  color: #222;
+}
+
+/* Select Category*/
+.title-category-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.title-category-container .note-title {
+  flex: 2;
+  margin-bottom: 0;
+}
+
+.title-category-container .category-select {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Note content */
+.note-content {
+  flex-grow: 1;
+  color: #555;
+  white-space: pre-wrap;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+/* Note footer (category & buttons) */
+.note-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Category badge with dynamic background */
+.note-category {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  user-select: none;
+}
+
+/* Color-coded categories - add more as needed */
+.category-Work {
+  background-color: #f39c12; /* orange */
+}
+
+.category-Personal {
+  background-color: #27ae60; /* green */
+}
+
+.category-Study {
+  background-color: #2980b9; /* blue */
+}
+
+.category-Others {
+  background-color: #7f8c8d; /* gray */
+}
+
+/* Buttons container */
+.note-actions button {
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.25s ease;
+  padding: 0 6px;
+}
+
+.note-actions button:hover {
+  color: #4a90e2;
+}
+
+/* Add/Edit form styles */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.note-form input,
+.note-form select {
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  border: 1.8px solid #ddd;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.note-form input:focus,
+.note-form select:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.note-form button {
+  align-self: flex-start;
+  background-color: #4a90e2;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 0.7rem 1.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.note-form button:hover {
+  background-color: #357abd;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+/* Dark Mode Switch styling */
+.switch {
+  display: block;
+  --width-of-switch: 3.5em;
+  --height-of-switch: 2em;
+  --size-of-icon: 1.4em;
+  --slider-offset: 0.3em;
+  position: relative;
+  width: var(--width-of-switch);
+  height: var(--height-of-switch);
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f4f4f5;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: var(--size-of-icon, 1.4em);
+  width: var(--size-of-icon, 1.4em);
+  border-radius: 20px;
+  left: var(--slider-offset, 0.3em);
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(40deg, #ff0080, #ff8c00 70%);
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #303136;
+}
+
+input:checked + .slider:before {
+  left: calc(100% - (var(--size-of-icon, 1.4em) + var(--slider-offset, 0.3em)));
+  background: #303136;
+  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+}
+
+.search-input {
+  padding: 10px;
+  width: 100%;
+  margin: 15px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.dark .search-input {
+  background-color: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+/* DARK MODE STYLES */
+.dark {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+}
+
+.dark .app-container {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+}
+
+.dark .note-card {
+  background-color: #333;
+  color: #f1f1f1;
+}
+
+.dark .note-title {
+  color: #fff;
+}
+
+.dark .note-form input,
+.dark .note-form select {
+  background-color: #444;
+  color: #fff;
+  border-color: #666;
+}
+
+.dark .note-form input:focus,
+.dark .note-form select:focus,
+.dark .search-input:focus {
+  border-color: #09d6de;
+  outline: none;
+}
+
+.dark .note-form button {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.dark .note-form button:hover {
+  background-color: #357abd;
+}
+
+.dark .note-actions button {
+  color: #ccc;
+}
+
+.dark .note-actions button:hover {
+  color: #4a90e2;
+}
+
+/* Dark Mode For editor */
+
+.dark .jodit-toolbar__box {
+  background-color: #2c2c2c !important;
+  border-color: #444 !important;
+}
+
+.dark .jodit-placeholder {
+  color: #aaa !important;
+}
+
+.dark .jodit-container {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+  border: 1px solid #555 !important;
+}
+
+.dark .jodit-ui-group:last-child{
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+.dark .jodit-wysiwyg {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+.dark .jodit-toolbar-button__trigger {
+  background: white !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  color: black !important;
+  fill: black !important;
+}
+
+.dark .jodit-toolbar-button {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Remove Unnecessary Buttons */
+.jodit-add-new-line {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+/* Hide the specific Lower Greek list option */
+.jodit-toolbar-button_lower_greek {
+  display: none !important;
+}
+
+/* Some LightMode Edits */
+.jodit-toolbar-button__trigger {
+  background: rgba(0, 0, 0, 0.756) !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  color: white !important;
+  fill: white !important;
+}
+
+.jodit-toolbar-button__trigger svg,
+.jodit-toolbar-button__trigger::before {
+  fill: currentColor !important;
+  color: inherit !important;
+}
+
+/* Prevent Double Click Mouse on Editor To Go to New Line */
+.jodit-workplace {
+  max-height: 200px !important; 
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: unset !important;
+}
+
+.jodit-wysiwyg {
+  max-height: 150px !important;
+  min-height: 100px !important;
+  overflow-y: auto !important;
+  padding-right: 5px;
+  line-height: 1.4;
+}
+
+.jodit-wysiwyg > div {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+}
