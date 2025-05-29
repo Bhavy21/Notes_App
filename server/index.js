@@ -12,7 +12,6 @@ const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/noteskeeper', {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
 }).then(() => {
   console.log('✅ MongoDB connected');
   app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
@@ -26,5 +25,3 @@ app.use('/api/auth', authRoutes);
 
 // Protect all note routes
 app.use('/notes', protect, noteRoutes);
-
-console.log("JWT_SECRET loaded:", process.env.JWT_SECRET);

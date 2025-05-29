@@ -104,7 +104,8 @@ function NotesPage() {
   };
 
   return (
-    <div className={`app-container ${darkMode ? 'dark' : ''}`}>
+    <div className="note-main">
+      <div className={`app-container ${darkMode ? 'dark' : ''}`}>
       <Header darkMode={darkMode} toggleTheme={() => setDarkMode(!darkMode)} />
 
       <form className="note-form" onSubmit={handleSubmit}>
@@ -131,6 +132,7 @@ function NotesPage() {
             />
           ))}
       </div>
+    </div>
     </div>
   );
 }
