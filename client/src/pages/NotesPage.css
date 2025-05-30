@@ -191,6 +191,31 @@ body {
   background-color: #357abd;
 }
 
+.action-btn {
+  align-self: flex-start;
+  background-color: #4a90e2;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 0.7rem 1.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-height: 44px;
+  width: 100%;
+}
+
+.action-btn:hover{
+  background-color: #357abd;
+}
+
+@media (max-width: 600px) {
+  .action-btn {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}
+
 .top-bar {
   display: flex;
   align-items: center;
