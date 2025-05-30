@@ -43,6 +43,7 @@ function Login() {
           <input name="password" placeholder="Password" type="password" onChange={handleChange} required />
           <button type="submit">Login</button>
         </form>
+        {error && <p style={{ color: 'red', marginTop: '1rem', textAlign: 'center' }}>{error}</p>}
         <p style={{ marginTop: '1.5rem', color: '#fff', fontWeight: '500' }}>
           New Here! <a href="/register" style={{ color: '#a3c9ff', textDecoration: 'None' }}>Register</a>
         </p>
