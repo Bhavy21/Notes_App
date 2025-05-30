@@ -16,11 +16,19 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       const res = await axios.post("/api/auth/login", form);
       login(res.data);
       navigate("/notes");
     } catch (err) {
+      if (err.response && err.response.data && err.response.data.message === "Email does not exist") {
+        setError("Email does not exist. Please register.");
+      } else if (err.response && err.response.data && err.response.data.message === "Invalid password") {
+        setError("Invalid password. Please try again.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
       console.error("Login failed:", err);
     }
   };
