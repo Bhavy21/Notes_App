@@ -1,25 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
-import axios from '../utils/axiosInstance';
-import './NotesPage.css';
-import Header from '../components/Header';
-import FormHeader from '../components/FormHeader';
-import EditorBox from '../components/EditorBox';
-import ActionButton from '../components/ActionButton';
-import SearchBar from '../components/SearchBar';
-import NoteCard from '../components/NoteCard';
+import { useEffect, useRef, useState } from "react";
+import axios from "../utils/axiosInstance";
+import "./NotesPage.css";
+import Header from "../components/Header";
+import FormHeader from "../components/FormHeader";
+import EditorBox from "../components/EditorBox";
+import ActionButton from "../components/ActionButton";
+import SearchBar from "../components/SearchBar";
+import NoteCard from "../components/NoteCard";
 
 function NotesPage() {
   const [notes, setNotes] = useState([]);
-  const [form, setForm] = useState({ title: '', category: '' });
+  const [form, setForm] = useState({ title: "", category: "" });
   const [editingId, setEditingId] = useState(null);
-  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [content, setContent] = useState('');
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("theme") === "dark"
+  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [content, setContent] = useState("");
   const editor = useRef(null);
 
   useEffect(() => {
-    document.body.className = darkMode ? 'dark-mode' : '';
-    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+    document.body.className = darkMode ? "dark-mode" : "";
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
   useEffect(() => {
@@ -28,12 +30,12 @@ function NotesPage() {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/notes');
+      const res = await axios.get("http://localhost:5000/notes");
       setNotes(res.data);
-      localStorage.setItem('notesBackup', JSON.stringify(res.data));
+      localStorage.setItem("notesBackup", JSON.stringify(res.data));
     } catch (err) {
-      console.warn('Fetching notes failed. Using offline data.');
-      const offlineNotes = localStorage.getItem('notesBackup');
+      console.warn("Fetching notes failed. Using offline data.");
+      const offlineNotes = localStorage.getItem("notesBackup");
       if (offlineNotes) {
         setNotes(JSON.parse(offlineNotes));
       }
@@ -51,14 +53,14 @@ function NotesPage() {
       if (editingId) {
         await axios.put(`http://localhost:5000/notes/${editingId}`, noteData);
       } else {
-        await axios.post('http://localhost:5000/notes', noteData);
+        await axios.post("http://localhost:5000/notes", noteData);
       }
-      setForm({ title: '', category: '' });
-      setContent('');
+      setForm({ title: "", category: "" });
+      setContent("");
       setEditingId(null);
       fetchNotes();
     } catch (err) {
-      console.error('Error saving note:', err);
+      console.error("Error saving note:", err);
     }
   };
 
@@ -72,45 +74,49 @@ function NotesPage() {
     try {
       await axios.delete(`http://localhost:5000/notes/${id}`);
       if (editingId === id) {
-        setForm({ title: '', category: '' });
-        setContent('');
+        setForm({ title: "", category: "" });
+        setContent("");
         setEditingId(null);
       }
       fetchNotes();
     } catch (err) {
-      console.error('Error deleting note:', err);
+      console.error("Error deleting note:", err);
     }
   };
 
   const editorConfig = {
     readonly: false,
-    toolbarButtonSize: 'small',
+    toolbarButtonSize: "small",
     toolbarAdaptive: false,
     toolbarSticky: false,
-    toolbar: ['bold', 'italic', 'underline', '|', 'ul', 'ol'],
-    buttons: ['bold', 'italic', 'underline', 'ul', 'ol'],
+    toolbar: ["bold", "italic", "underline", "|", "ul", "ol"],
+    buttons: ["bold", "italic", "underline", "ul", "ol"],
     showXPathInStatusbar: false,
     showCharsCounter: false,
     showWordsCounter: false,
     showStatusbar: false,
-    removeButtons: '',
+    removeButtons: "",
     askBeforePasteHTML: false,
     askBeforePasteFromWord: false,
     toolbarInline: false,
-    enter: 'div',
+    enter: "div",
     cleanHTML: {
       removeEmptyElements: true,
     },
   };
 
   return (
-    <div className="note-main">
-      <div className={`app-container ${darkMode ? 'dark' : ''}`}>
+    <div className={`app-container ${darkMode ? "dark" : ""}`}>
       <Header darkMode={darkMode} toggleTheme={() => setDarkMode(!darkMode)} />
 
       <form className="note-form" onSubmit={handleSubmit}>
         <FormHeader form={form} handleChange={handleChange} />
-        <EditorBox editorRef={editor} content={content} setContent={setContent} config={editorConfig} />
+        <EditorBox
+          editorRef={editor}
+          content={content}
+          setContent={setContent}
+          config={editorConfig}
+        />
         <ActionButton editingId={editingId} />
       </form>
 
@@ -132,7 +138,6 @@ function NotesPage() {
             />
           ))}
       </div>
-    </div>
     </div>
   );
 }
