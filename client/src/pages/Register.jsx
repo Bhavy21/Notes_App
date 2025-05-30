@@ -28,7 +28,11 @@ function Register() {
       login(res.data);
       navigate("/login");
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      if (err.response && err.response.data && err.response.data.message === "Email already exists") {
+        setError("User already exists. Please login.");
+      } else {
+        setError("Registration failed. Please try again.");
+      }
       console.error("Registration failed:", err);
     }
   };
