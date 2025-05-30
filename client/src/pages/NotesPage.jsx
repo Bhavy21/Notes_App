@@ -16,7 +16,6 @@ function NotesPage() {
     () => localStorage.getItem("theme") === "dark"
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const [content, setContent] = useState("");
   const editor = useRef(null);
 
   useEffect(() => {
@@ -47,35 +46,44 @@ function NotesPage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const noteData = { ...form, content };
-      if (editingId) {
-        await axios.put(`http://localhost:5000/notes/${editingId}`, noteData);
-      } else {
-        await axios.post("http://localhost:5000/notes", noteData);
-      }
-      setForm({ title: "", category: "" });
-      setContent("");
-      setEditingId(null);
-      fetchNotes();
-    } catch (err) {
-      console.error("Error saving note:", err);
+  e.preventDefault();
+
+  const currentContent = editor.current?.value || editor.current?.getEditorValue?.() || "";
+
+  try {
+    const noteData = { ...form, content: currentContent };
+
+    if (editingId) {
+      await axios.put(`http://localhost:5000/notes/${editingId}`, noteData);
+    } else {
+      await axios.post("http://localhost:5000/notes", noteData);
     }
-  };
+
+    setForm({ title: "", category: "" });
+    setEditingId(null);
+
+    editor.current?.setEditorValue?.('');
+
+    fetchNotes();
+  } catch (err) {
+    console.error("Error saving note:", err);
+  }
+};
+
 
   const handleEdit = (note) => {
-    setForm({ title: note.title, category: note.category });
-    setContent(note.content);
-    setEditingId(note._id);
-  };
+  setForm({ title: note.title, category: note.category });
+  setEditingId(note._id);
+  setTimeout(() => {
+    editor.current?.setEditorValue?.(note.content || '');
+  }, 0);
+};
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/notes/${id}`);
       if (editingId === id) {
         setForm({ title: "", category: "" });
-        setContent("");
         setEditingId(null);
       }
       fetchNotes();
@@ -113,8 +121,6 @@ function NotesPage() {
         <FormHeader form={form} handleChange={handleChange} />
         <EditorBox
           editorRef={editor}
-          content={content}
-          setContent={setContent}
           config={editorConfig}
         />
         <ActionButton editingId={editingId} />
